@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Role Inti Benua</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.3"/><circle cx="50" cy="30" r="1.5" fill="white" opacity="0.3"/><circle cx="80" cy="10" r="1" fill="white" opacity="0.3"/><circle cx="30" cy="70" r="1.5" fill="white" opacity="0.3"/><circle cx="70" cy="80" r="2" fill="white" opacity="0.3"/></svg>');
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(45deg, #ff8a00, #e52e71, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            color: #ff8a00;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        h3 {
+            color: #e52e71;
+            margin: 15px 0 10px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .wheel-container {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .wheel {
+            width: 300px;
+            height: 300px;
+            border: 8px solid #2563eb;
+            border-radius: 50%;
+            position: relative;
+            margin: 0 auto 30px;
+            background: radial-gradient(circle, #1a2a6c, #000);
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(37, 99, 235, 0.5);
+        }
+
+        .wheel-segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .wheel-segment:hover {
+            transform: scale(1.05);
+        }
+
+        .pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #ff8a00;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(255, 138, 0, 0.8);
+        }
+
+        .spin-btn {
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .spin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .spin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #ff8a00;
+            font-weight: bold;
+            min-height: 40px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .rule-item {
+            background: rgba(37, 99, 235, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #2563eb;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .wheel {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        .glow {
+            text-shadow: 0 0 10px rgba(255, 138, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Event Role Inti Benua ✨</h1>
+            <p>Event pertama di grup yang diselenggarakan setiap 2 bulan sekali</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎉 Deskripsi Event</h2>
+                <p>Event Role merupakan event pertama di grup ini yang diselenggarakan oleh ketua admin utama dan co-admin setiap 2 bulan sekali pada tanggal 1 awal bulan, dalam Event Role 4 peserta yang terpilih akan mendapatkan peran acak sesuai dengan profesi/pekerjaan valid yang telah di request oleh para member/anggota pada hari sebelumnya hingga Event Role dimulai.</p>
+                
+                <p style="margin-top: 15px;">Peserta yang terpilih nantinya harus bersikap dan berperilaku persis sesuai dengan Role/Peran yang ia dapatkan dari hasil spin wheels profesi/pekerjaan oleh ketua admin utama, dan harus aktif nge-chat di grup setiap hari hingga batas waktu yang ditentukan serta ada hadiah/apresiasi terhadap peserta yang mendalami perannya. Untuk informasi lebih lanjut silahkan scroll kebawah sampai selesai!👇:</p>
+            </div>
+
+            <div class="section">
+                <h2>🏆 Apresiasi Bagi Juara 🏅</h2>
+                <div class="rules-grid">
+                    <div class="rule-item">
+                        <h3>🥇 Juara 1</h3>
+                        <p>Uang senilai Rp50.000</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>🥈 Juara 2</h3>
+                        <p>Uang senilai Rp25.000</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>🥉 Juara 3 & 4</h3>
+                        <p>Nice try</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Informasi Penting:</h3>
+                <ul>
+                    <li>Pemilihan juara melalui Google Form yang nantinya akan dibagikan oleh Co-Admin setelah event role selesai.</li>
+                    <li>Penerimaan Apresiasi/Hadiah hanya bisa lewat E-wallet (DANA, GOPAY, OVO) jadi bagi partisipan silahkan buat akun E-wallet jika belum punya (Jika para member antusias terhadap Event Role ini, penambahan hadiah Uang dan hadiah Ekslusif bisa dipertimbangkan lebih jauh di masa depan).</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📜 Rules/Peraturan Event Role ⚙</h2>
+                <div class="rules-grid">
+                    <div class="rule-item">
+                        <h3>Rules No.1</h3>
+                        <p>Partisipan yang terpilih diwajibkan untuk aktif berinteraksi/berkomunikasi di grup IBNU setiap hari sampai batas waktu yang telah ditentukan.</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>Rules No.2</h3>
+                        <p>Partisipan diwajibkan untuk bersikap dan berperilaku sesuai dengan Role/Peran yang ia dapatkan dan diharuskan profesional serta serius dalam menjalani role nya.</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>Rules No.3</h3>
+                        <p>Bagi para member yang tidak terpilih, diharuskan bekerja sama dengan Event Role ini dan tidak mengganggu jalannya Event (Member boleh mengkritik Partisipan).</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>Rules No.4</h3>
+                        <p>Partisipan diizinkan dan diperbolehkan menggunakan kata-kata tertentu yang sudah sesuai dengan Role yang ia dapatkan (Sewajarnya dan baku).</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>Rules No.5</h3>
+                        <p>Baik Partisipan maupun Member bisa melakukan argumentasi, drama, maupun Roleplay satu sama lain secara bebas.</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>Rules No.6</h3>
+                        <p>Jika partisipan merasa stres/tertekan karena terlalu mendalami peran (misal jadi bos galak terus), boleh minta 'cuti peran' 1×24 jam tanpa penalty, cukup ketik di grup dan tag Ketua Admin Utama "Ketua saya butuh cuti" kirim lalu tunggu direspon dan diberi timer waktu 24 jam.</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>Rules No.7</h3>
+                        <p>Partisipan harus teguh mempertahankan role nya dan tidak terpengaruh oleh kritik member.</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>Rules No.8</h3>
+                        <p>Agar adil, peserta yang pernah menang Juara 🥇/🥈 tidak bisa ikut event berikutnya sebagai partisipan/peserta, tapi boleh jadi Juri Tamu atau MC Bantu. Ini agar semua member punya kesempatan merasakan hadiah, apresiasi, dan pengalaman mendalami peran.</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>Rules No.9</h3>
+                        <p>Sanksi jika Partisipan melanggar atau gagal memenuhi rules no.1,2,4,7 adalah didiskualifikasi dan diturunkan jadi member selamanya (jika admin terkecuali untuk ketua utama admin dan co-admin).</p>
+                    </div>
+                    <div class="rule-item">
+                        <h3>Rules No.10</h3>
+                        <p>Ketua Admin Utama dan Co-Admin berhak menghapus chat/balasan yang tidak senonoh/tidak mendukung jalannya Event Role yang sehat.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚖ Syarat & Ketentuan ikut Event Role 🔮</h2>
+                <ul>
+                    <li>Mempunyai salah satu atau lebih akun E-wallet (DANA, GOPAY, OVO) ✅</li>
+                    <li>Mental siap dan kuat untuk menjalankan role yang didapatkan secara profesional dan penuh tanggungjawab ✅</li>
+                    <li>Mematuhi dan menaati rules penting yang berlaku selama Event Role berlangsung ✅</li>
+                    <li>Bersedia menjalani role apapun yang didapatkan melalui Spin Wheels ✅</li>
+                    <li>Bersedia dihukum bilamana melakukan kesalahan atau pelanggaran sesuai rules yang telah dibuat ✅</li>
+                    <li>Sudah mendaftar ikut Event Role dari Ketua Admin Utama atau Co-Admin ✅</li>
+                    <li>Peserta yang terpilih tidak boleh membuat kerabat/keluarga/teman memainkan role nya, harus pengguna asli ✅</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🎡 Spin Wheels Role Generator</h2>
+                <div class="wheel-container">
+                    <div class="wheel" id="wheel">
+                        <div class="pointer"></div>
+                    </div>
+                    <button class="spin-btn" id="spinBtn">Spin Wheels!</button>
+                    <div class="result" id="result"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>website ini diciptakan oleh co-admin - Atha Ullah Syaiban</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const wheel = document.getElementById('wheel');
+            const spinBtn = document.getElementById('spinBtn');
+            const result = document.getElementById('result');
+            
+            // Daftar role dari Indonesia dan Dunia
+            const roles = [
+                // Role Indonesia
+                "Dokter", "Guru", "CEO", "Polisi", "TNI", "Petani", "Nelayan", "Pengusaha", "Pegawai Negeri", "Wartawan",
+                "Dosen", "Perawat", "Apoteker", "Arsitek", "Insinyur", "Hakim", "Jaksa", "Pengacara", "Notaris", "Akuntan",
+                "Pilot", "Masinis", "Supir", "Pedagang", "Pemadam Kebakaran", "Bidan", "Psikolog", "Sosiolog", "Antropolog", "Sejarawan",
+                "Fotografer", "Jurnalis", "Desainer", "Programmer", "Dekorator", "Mekanik", "Montir", "Tukang Kayu", "Tukang Las", "Tukang Bangunan",
+                
+                // Role Dunia
+                "Doctor", "Teacher", "CEO", "Police Officer", "Soldier", "Farmer", "Fisherman", "Entrepreneur", "Civil Servant", "Journalist",
+                "Professor", "Nurse", "Pharmacist", "Architect", "Engineer", "Judge", "Prosecutor", "Lawyer", "Notary", "Accountant",
+                "Pilot", "Train Driver", "Driver", "Merchant", "Firefighter", "Midwife", "Psychologist", "Sociologist", "Anthropologist", "Historian",
+                "Photographer", "Reporter", "Designer", "Developer", "Decorator", "Mechanic", "Tire Repairer", "Carpenter", "Welder", "Construction Worker",
+                "Chef", "Waiter", "Bartender", "Chef", "Baker", "Tailor", "Plumber", "Electrician", "Veterinarian", "Dentist"
+            ];
+
+            // Membuat segmen wheel
+            function createWheelSegments() {
+                const colors = [
+                    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+                    '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
+                    '#F8C471', '#82E0AA', '#F1948A', '#85C1E9', '#D7BDE2',
+                    '#A3E4D7', '#FAD7A0', '#D5A6BD', '#AED6F1', '#A9DFBF'
+                ];
+                
+                const segmentAngle = 360 / roles.length;
+                
+                roles.forEach((role, index) => {
+                    const segment = document.createElement('div');
+                    segment.className = 'wheel-segment';
+                    segment.style.transform = `rotate(${index * segmentAngle}deg)`;
+                    segment.style.backgroundColor = colors[index % colors.length];
+                    segment.textContent = role;
+                    wheel.appendChild(segment);
+                });
+            }
+
+            createWheelSegments();
+
+            spinBtn.addEventListener('click', function() {
+                if (this.disabled) return;
+                
+                this.disabled = true;
+                result.textContent = 'Memutar...';
+                
+                // Rotasi acak (minimal 5 putaran + sudut acak)
+                const spins = 5;
+                const randomRoleIndex = Math.floor(Math.random() * roles.length);
+                const segmentAngle = 360 / roles.length;
+                const extraRotation = randomRoleIndex * segmentAngle;
+                
+                // Total rotasi (dalam derajat)
+                const totalRotation = spins * 360 + (360 - extraRotation);
+                
+                wheel.style.transition = 'transform 4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                wheel.style.transform = `rotate(${totalRotation}deg)`;
+                
+                setTimeout(() => {
+                    result.textContent = `Role Anda: ${roles[randomRoleIndex]}`;
+                    result.classList.add('glow');
+                    this.disabled = false;
+                    
+                    setTimeout(() => {
+                        result.classList.remove('glow');
+                    }, 2000);
+                }, 4000);
+            });
+
+            // Tambahkan efek hover ke segmen wheel
+            const segments = document.querySelectorAll('.wheel-segment');
+            segments.forEach(segment => {
+                segment.addEventListener('mouseover', function() {
+                    this.style.transform = this.style.transform.replace('rotate', 'rotate') + ' scale(1.05)';
+                });
+                
+                segment.addEventListener('mouseout', function() {
+                    const originalRotation = this.style.transform.match(/rotate\([^)]+\)/)[0];
+                    this.style.transform = originalRotation;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
