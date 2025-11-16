@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Role Inti Benua</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a3d62, #1a535c, #0f2027);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #ff6b6b, #feca57, #55efc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #a8dadc;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .earth-globe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #4ecdc4, #1a535c);
+            box-shadow: 0 0 50px rgba(78, 205, 196, 0.3);
+            animation: rotate 20s linear infinite;
+            opacity: 0.7;
+            z-index: 1;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .earth-features {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        .continent {
+            position: absolute;
+            background: rgba(144, 238, 144, 0.4);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(144, 238, 144, 0.5);
+        }
+        
+        .continent:nth-child(1) {
+            width: 80px;
+            height: 60px;
+            top: 20%;
+            left: 30%;
+            transform: rotate(15deg);
+        }
+        
+        .continent:nth-child(2) {
+            width: 60px;
+            height: 90px;
+            top: 40%;
+            left: 60%;
+            transform: rotate(-10deg);
+        }
+        
+        .continent:nth-child(3) {
+            width: 70px;
+            height: 50px;
+            top: 60%;
+            left: 20%;
+            transform: rotate(5deg);
+        }
+        
+        .continent:nth-child(4) {
+            width: 90px;
+            height: 70px;
+            top: 70%;
+            left: 50%;
+            transform: rotate(-20deg);
+        }
+        
+        /* Sections */
+        section {
+            padding: 60px 0;
+            margin: 40px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #a8dadc;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #ff6b6b, #feca57);
+            border-radius: 2px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+        }
+        
+        .highlight {
+            background: linear-gradient(to right, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+        
+        /* Awards Section */
+        .awards-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .award-card {
+            width: 250px;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .award-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .award-card:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+        
+        .award-card:hover:before {
+            left: 100%;
+            top: 100%;
+        }
+        
+        .medal {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #feca57;
+            text-shadow: 0 5px 15px rgba(252, 213, 87, 0.5);
+        }
+        
+        .medal.gold {
+            color: #feca57;
+        }
+        
+        .medal.silver {
+            color: #bdc3c7;
+        }
+        
+        .medal.bronze {
+            color: #cd7f32;
+        }
+        
+        .award-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #a8dadc;
+        }
+        
+        .award-description {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+        }
+        
+        /* Rules Section */
+        .rules-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+        
+        .rules-list li {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 5px solid #ff6b6b;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .rules-list li:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .rules-list li:before {
+            content: attr(data-number);
+            position: absolute;
+            left: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(to right, #ff6b6b, #feca57);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        .rules-list li strong {
+            color: #ff6b6b;
+        }
+        
+        /* Conditions Section */
+        .conditions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .condition-item {
+            padding: 25px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .condition-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .condition-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(to right, #4ecdc4, #45b7d1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .condition-text h3 {
+            color: #a8dadc;
+            margin-bottom: 5px;
+        }
+        
+        /* Contact Section */
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .contact-card {
+            width: 300px;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .contact-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .contact-card:hover:before {
+            left: 100%;
+        }
+        
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #4ecdc4, #45b7d1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+        
+        .contact-name {
+            font-size: 1.8rem;
+            color: #a8dadc;
+            margin-bottom: 10px;
+        }
+        
+        .contact-title {
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .wa-link {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+        
+        .wa-link:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            color: #a8dadc;
+            font-size: 1.1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-text {
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        .creator {
+            color: #feca57;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .earth-globe {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .award-card, .contact-card {
+                width: 90%;
+                margin: 15px auto;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .rules-list li {
+                padding: 15px;
+            }
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(to right, #ff6b6b, #feca57);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            margin: 10px;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #4ecdc4, #45b7d1);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(to right, #45b7d1, #40a8c8);
+            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.6);
+        }
+        
+        /* Animated background elements */
+        .bg-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .circle {
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 107, 107, 0.3);
+            top: 20%;
+            left: 10%;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background: rgba(252, 213, 87, 0.3);
+            bottom: 15%;
+            right: 15%;
+        }
+        
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            background: rgba(78, 205, 196, 0.3);
+            top: 60%;
+            right: 20%;
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #a8dadc;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+            z-index: 100;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        /* Enhanced WhatsApp button */
+        .wa-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #25D366;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            margin: 15px auto;
+            max-width: 250px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .wa-button:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
+        }
+        
+        .wa-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background elements -->
+    <div class="bg-element circle circle-1"></div>
+    <div class="bg-element circle circle-2"></div>
+    <div class="bg-element circle circle-3"></div>
+    
+    <!-- Floating particles -->
+    <script>
+        // Create floating particles
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particle.style.width = Math.random() * 3 + 2 + 'px';
+            particle.style.height = particle.style.width;
+            document.body.appendChild(particle);
+        }
+    </script>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>✨ Event Role Inti Benua ✨</h1>
+                <p class="subtitle">Event pertama di grup ini yang diselenggarakan oleh ketua admin utama dan co-admin setiap 2 bulan sekali</p>
+                <div class="earth-globe"></div>
+                <div class="earth-features">
+                    <div class="continent"></div>
+                    <div class="continent"></div>
+                    <div class="continent"></div>
+                    <div class="continent"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Event Description -->
+        <section>
+            <h2> Tentang Event Role </h2>
+            <p>Event Role merupakan event pertama di grup ini yang diselenggarakan oleh ketua admin utama dan co-admin setiap 2 bulan sekali pada tanggal 1 awal bulan. Dalam Event Role, 4 peserta yang terpilih akan mendapatkan peran acak sesuai dengan profesi/pekerjaan valid yang telah di request oleh para member/anggota pada hari sebelumnya hingga Event Role dimulai.</p>
+            <p>Peserta yang terpilih nantinya harus bersikap dan berperilaku persis sesuai dengan Role/Peran yang ia dapatkan dari hasil spin wheels profesi/pekerjaan oleh ketua admin utama, dan harus aktif nge-chat di grup setiap hari hingga batas waktu yang ditentukan serta ada hadiah/apresiasi terhadap peserta yang mendalami perannya.</p>
+            <p>Untuk informasi lebih lanjut silahkan scroll kebawah sampai selesai!👇</p>
+        </section>
+
+        <!-- Awards -->
+        <section>
+            <h2>🏆 Apresiasi Bagi Juara 🏅</h2>
+            <div class="awards-container">
+                <div class="award-card">
+                    <div class="medal gold">🥇</div>
+                    <h3 class="award-title">Juara 1</h3>
+                    <p class="award-description">Uang senilai <span class="highlight">Rp50.000</span></p>
+                </div>
+                <div class="award-card">
+                    <div class="medal silver">🥈</div>
+                    <h3 class="award-title">Juara 2</h3>
+                    <p class="award-description">Uang senilai <span class="highlight">Rp25.000</span></p>
+                </div>
+                <div class="award-card">
+                    <div class="medal bronze">🥉</div>
+                    <h3 class="award-title">Juara 3 & 4</h3>
+                    <p class="award-description">Nice try</p>
+                </div>
+            </div>
+            
+            <h3 style="text-align: center; margin-top: 40px; color: #a8dadc;">Informasi Penting:</h3>
+            <ul style="list-style: none; margin-top: 30px; text-align: center;">
+                <li style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 15px; display: inline-block; min-width: 250px;">1. Pemilihan juara melalui Google Form yang nantinya akan dibagikan oleh Co-Admin setelah event role selesai.</li>
+                <li style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 15px; display: inline-block; min-width: 250px;">2. Penerimaan Apresiasi/Hadiah hanya bisa lewat E-wallet (DANA, GOPAY, OVO) jadi bagi partisipan silahkan buat akun E-wallet jika belum punya.</li>
+                <li style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 15px; display: inline-block; min-width: 250px;">3. Jika para member antusias terhadap Event Role ini, penambahan hadiah Uang dan hadiah Ekslusif bisa dipertimbangkan lebih jauh di masa depan.</li>
+            </ul>
+        </section>
+
+        <!-- Rules -->
+        <section>
+            <h2>📜 Rules/Peraturan Event Role ⚙</h2>
+            <ul class="rules-list">
+                <li data-number="1">Partisipan yang terpilih diwajibkan untuk aktif berinteraksi/berkomunikasi di grup IBNU setiap hari sampai batas waktu yang telah ditentukan.</li>
+                <li data-number="2">Partisipan diwajibkan untuk bersikap dan berperilaku sesuai dengan Role/Peran yang ia dapatkan dan diharuskan profesional serta serius dalam menjalani role nya.</li>
+                <li data-number="3">Bagi para member yang tidak terpilih, diharuskan bekerja sama dengan Event Role ini dan tidak mengganggu jalannya Event (Member boleh mengkritik Partisipan).</li>
+                <li data-number="4">Partisipan diizinkan dan diperbolehkan menggunakan kata-kata tertentu yang sudah sesuai dengan Role yang ia dapatkan (Sewajarnya dan baku).</li>
+                <li data-number="5">Baik Partisipan maupun Member bisa melakukan argumentasi, drama, maupun Roleplay satu sama lain secara bebas.</li>
+                <li data-number="6">Jika partisipan merasa stres/tertekan karena terlalu mendalami peran (misal jadi bos galak terus), boleh minta 'cuti peran' 1×24 jam tanpa penalty, cukup ketik di grup dan tag Ketua Admin Utama "Ketua saya butuh cuti" kirim lalu tunggu direspon dan diberi timer waktu 24 jam.</li>
+                <li data-number="7">Partisipan harus teguh mempertahankan role nya dan tidak terpengaruh oleh kritik member.</li>
+                <li data-number="8">Agar adil, peserta yang pernah menang Juara 🥇/🥈 tidak bisa ikut event berikutnya sebagai partisipan/peserta, tapi boleh jadi Juri Tamu atau MC Bantu. Ini agar semua member punya kesempatan merasakan hadiah, apresiasi, dan pengalaman mendalami peran.</li>
+                <li data-number="9">Sanksi jika Partisipan melanggar atau gagal memenuhi rules no.1,2,4,7 adalah didiskualifikasi dan diturunkan jadi member selamanya (jika admin terkecuali untuk ketua utama admin dan co-admin).</li>
+                <li data-number="10">Ketua Admin Utama dan Co-Admin berhak menghapus chat/balasan yang tidak senonoh/tidak mendukung jalannya Event Role yang sehat.</li>
+            </ul>
+        </section>
+
+        <!-- Conditions -->
+        <section>
+            <h2>⚖ Syarat & Ketentuan ikut Event Role 🔮</h2>
+            <div class="conditions-container">
+                <div class="condition-item">
+                    <div class="condition-icon">✅</div>
+                    <div class="condition-text">
+                        <h3>Mempunyai akun E-wallet</h3>
+                        <p>Mempunyai salah satu atau lebih akun E-wallet (DANA, GOPAY, OVO)</p>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon">🧠</div>
+                    <div class="condition-text">
+                        <h3>Mental Kuat</h3>
+                        <p>Mental siap dan kuat untuk menjalankan role yang didapatkan secara profesional dan penuh tanggungjawab</p>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon">✅</div>
+                    <div class="condition-text">
+                        <h3>Mengikuti Rules</h3>
+                        <p>Mematuhi dan menaati rules penting yang berlaku selama Event Role berlangsung</p>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon">🎲</div>
+                    <div class="condition-text">
+                        <h3>Menerima Peran</h3>
+                        <p>Bersedia menjalani role apapun yang didapatkan melalui Spin Wheels</p>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon">⚠️</div>
+                    <div class="condition-text">
+                        <h3>Menerima Sanksi</h3>
+                        <p>Bersedia dihukum bilamana melakukan kesalahan atau pelanggaran sesuai rules yang telah dibuat</p>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon">📝</div>
+                    <div class="condition-text">
+                        <h3>Sudah Mendaftar</h3>
+                        <p>Sudah mendaftar ikut Event Role dari Ketua Admin Utama atau Co-Admin</p>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon">🚫</div>
+                    <div class="condition-text">
+                        <h3>Tidak Boleh Bantu</h3>
+                        <p>Peserta yang terpilih tidak boleh membuat kerabat/keluarga/teman memainkan role nya, harus pengguna asli</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section>
+            <h2>📲 Kontak Pendaftaran Event Role</h2>
+            <div class="contact-container">
+                <div class="contact-card">
+                    <div class="contact-icon">👑</div>
+                    <h3 class="contact-name">Farhan</h3>
+                    <p class="contact-title">Ketua Admin Utama</p>
+                    <a href="https://wa.me/qr/QEWYI4UTGCKBG1" class="wa-link">Hubungi via WhatsApp</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">🌟</div>
+                    <h3 class="contact-name">Atha</h3>
+                    <p class="contact-title">Co-Admin</p>
+                    <a href="https://wa.me/qr/4YIG3A3UVITZJ1" class="wa-link">Hubungi via WhatsApp</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">Website ini diciptakan oleh co-admin - <span class="creator">Atha Ullah Syaiban</span></p>
+        <p style="margin-top: 10px; color: #a8dadc;">© 2025 Event Role Inti Benua. All rights reserved.</p>
+    </footer>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">↓</div>
+</body>
+</html>
+
